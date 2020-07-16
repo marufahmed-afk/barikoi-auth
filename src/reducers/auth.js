@@ -4,6 +4,7 @@ const initialState = {
   data: localStorage.getItem('token'),
   isAuthenticated: false,
   openModal: false,
+  error: null,
 };
 
 export default function (state = initialState, action) {
@@ -12,7 +13,7 @@ export default function (state = initialState, action) {
       localStorage.setItem('token', action.payload);
       return {
         ...state,
-        ...action.payload,
+        data: action.payload,
         isAuthenticated: true,
         openModal: false,
       };
@@ -29,6 +30,7 @@ export default function (state = initialState, action) {
         ...state,
         data: null,
         isAuthenticated: false,
+        error: action.payload,
       };
     default:
       return state;

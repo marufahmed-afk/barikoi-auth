@@ -23,8 +23,14 @@ export const loginUser = (formData) => async (dispatch) => {
         type: LOGIN_USER,
         payload: res.data.data,
       });
+    } else {
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: res.data.message,
+      });
     }
   } catch (err) {
+    console.log('error: ', err.response.data);
     dispatch({
       type: LOGIN_FAIL,
     });

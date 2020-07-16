@@ -4,7 +4,13 @@ import { toggleModal, loginUser } from '../../actions/auth';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const LoginForm = ({ isAuthenticated, toggleModal, loginUser, history }) => {
+const LoginForm = ({
+  isAuthenticated,
+  error,
+  toggleModal,
+  loginUser,
+  history,
+}) => {
   useEffect(() => {
     document.addEventListener('mousedown', handleClick);
     if (isAuthenticated) {
@@ -41,7 +47,7 @@ const LoginForm = ({ isAuthenticated, toggleModal, loginUser, history }) => {
   const { email, password } = formState;
 
   const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: [e.target.value] });
+    setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
   return (
@@ -61,6 +67,7 @@ const LoginForm = ({ isAuthenticated, toggleModal, loginUser, history }) => {
         />
 
         <button className='submit-btn btn'>Login</button>
+        {error && <p>{error}</p>}
       </form>
     </div>
   );
@@ -68,6 +75,7 @@ const LoginForm = ({ isAuthenticated, toggleModal, loginUser, history }) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  error: state.auth.error,
 });
 
 LoginForm.prototypes = {
